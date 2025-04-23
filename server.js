@@ -58,6 +58,10 @@ app.post('/api/register', async (req, res) => {
   if (!isPasswordStrong) {
     return res.status(400).json({ error: 'Password must contain at least 1 capital letter and 1 number' });
   }
+    const usernameRegex = /^[a-zA-Z0-9_]+$/;
+  if (!usernameRegex.test(username)) {
+    return res.status(400).json({ error: 'Username must only contain letters, numbers, or underscores' });
+  }
 
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
